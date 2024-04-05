@@ -5,7 +5,6 @@ import Swiper from 'react-native-swiper';
 
   const handleDoubleTap = event => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      // Perform action on double tap, such as zooming in
       console.log('Double tap detected!');
     }
   };
