@@ -5,8 +5,6 @@ import declineCallImage from '../../assets/declinecall.png';
 import receiveCallImage from '../../assets/receivecall.png';
 import { useNavigation } from '@react-navigation/native';
 
-
-
 const FakeHomeCall = () => {
     const navigation = useNavigation();
     const handleDeclineCallFake = () => {
@@ -47,11 +45,10 @@ const FakeHomeCall = () => {
 };
 
 const styles = StyleSheet.create({
-    
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   image: {
     width: 450,
