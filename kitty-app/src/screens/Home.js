@@ -1,7 +1,21 @@
-import React, { useRef, useState } from 'react';
-import { ImageBackground, View, Text, Image, StyleSheet , TouchableOpacity} from 'react-native';
-import { TapGestureHandler, State, GestureHandlerRootView,  Gesture, GestureDetector} from 'react-native-gesture-handler';
-import profileImage from '../../assets/profile.png';
+import React, { useRef, useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  ImageBackground,
+} from "react-native";
+import {
+  TapGestureHandler,
+  State,
+  GestureHandlerRootView,
+  Gesture,
+  GestureDetector,
+} from "react-native-gesture-handler";
+import profileImage from "../../assets/profile.png";
 import declineCallImage from '../../assets/declinecall.png';
 import receiveCallImage from '../../assets/receivecall.png';
 import catImage from '../../assets/kitty_resting.png';
@@ -40,11 +54,9 @@ const Home = () => {
   const swipe = Gesture.Pan().onStart(handleSwipe);
 
   return (
-    
-    <View style={styles.container}> 
-      {isBannerVisible && ( // Conditional rendering based on the visibility state
-       
-       <View style={styles.banner}>
+    <ImageBackground source={imageBG} style={styles.imagebgStyle}>
+      <Modal transparent={true} visible={isBannerVisible}>
+        <View style={styles.banner}>
           <View style={styles.horizontalContainer}>
             <Image source={profileImage} style={styles.bannerImage} />
             <View style={styles.verticalTextContainer}>
@@ -55,12 +67,11 @@ const Home = () => {
               <Image source={declineCallImage} style={styles.bannerImage} />
             </TouchableOpacity>
             <TouchableOpacity onPress={handleReceiveCall}>
-                <Image source={receiveCallImage} style={styles.bannerImage} />
+              <Image source={receiveCallImage} style={styles.bannerImage} />
             </TouchableOpacity>
           </View>
         </View>
-      )}
-      <Image source={imageBG} style={styles.imagebgStyle} />
+      </Modal>
       <GestureHandlerRootView style={styles.container}>
         <GestureDetector gesture={doubleTap}>
           <GestureDetector gesture={swipe}>
@@ -71,8 +82,7 @@ const Home = () => {
           </GestureDetector>
         </GestureDetector>
       </GestureHandlerRootView>
-    </View>
-
+    </ImageBackground>
   );
 };
 
@@ -84,7 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#1b1b2e",
     padding: 20,
     borderRadius: 10, // Rounded corners
-    marginTop: 35
+    marginTop: 35,
   },
   horizontalContainer: {
     flexDirection: "row",
@@ -123,8 +133,6 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
     resizeMode: 'contain'
-
-
   }
 });
 
