@@ -1,11 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, Image, StyleSheet , TouchableOpacity} from 'react-native';
+import { ImageBackground, View, Text, Image, StyleSheet , TouchableOpacity} from 'react-native';
 import { TapGestureHandler, State, GestureHandlerRootView,  Gesture, GestureDetector} from 'react-native-gesture-handler';
 import profileImage from '../../assets/profile.png';
 import declineCallImage from '../../assets/declinecall.png';
 import receiveCallImage from '../../assets/receivecall.png';
-import catImage from '../../assets/cat.png';
+import catImage from '../../assets/kitty_resting.png';
 import { useNavigation } from '@react-navigation/native';
+import imageBG from '../../assets/kitty_background.png';
 
 
 const handleDoubleTap = (setBannerVisible) => {
@@ -39,9 +40,11 @@ const Home = () => {
   const swipe = Gesture.Pan().onStart(handleSwipe);
 
   return (
-    <View style={styles.container}>
+    
+    <View style={styles.container}> 
       {isBannerVisible && ( // Conditional rendering based on the visibility state
-        <View style={styles.banner}>
+       
+       <View style={styles.banner}>
           <View style={styles.horizontalContainer}>
             <Image source={profileImage} style={styles.bannerImage} />
             <View style={styles.verticalTextContainer}>
@@ -57,17 +60,19 @@ const Home = () => {
           </View>
         </View>
       )}
+      <Image source={imageBG} style={styles.imagebgStyle} />
       <GestureHandlerRootView style={styles.container}>
         <GestureDetector gesture={doubleTap}>
           <GestureDetector gesture={swipe}>
             <Image
-              style={styles.image}
+              style={styles.catImage}
               source={catImage} // Path to your local image file
             />
           </GestureDetector>
         </GestureDetector>
       </GestureHandlerRootView>
     </View>
+
   );
 };
 
@@ -104,8 +109,23 @@ const styles = StyleSheet.create({
   bannerImage: {
     width: 50,
     height: 50,
-    margin: 5,
+    margin: 5
   },
+  imagebgStyle:{
+    width: 415,
+    height: 900,
+    zIndex: -1
+  },
+  catImage:{
+    position: 'absolute',
+    bottom: 400,
+    left: 65,
+    width: 300,
+    height: 300,
+    resizeMode: 'contain'
+
+
+  }
 });
 
 export default Home;
