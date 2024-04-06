@@ -9,21 +9,20 @@ import {
   ImageBackground,
 } from "react-native";
 import {
-  TapGestureHandler,
-  State,
   GestureHandlerRootView,
   Gesture,
   GestureDetector,
 } from "react-native-gesture-handler";
 import profileImage from "../../assets/profile.png";
-import declineCallImage from '../../assets/declinecall.png';
-import receiveCallImage from '../../assets/receivecall.png';
-import catImage from '../../assets/kitty_resting.png';
+import declineCallImage from "../../assets/declinecall.png";
+import receiveCallImage from "../../assets/receivecall.png";
+import catImage from "../../assets/kitty_resting.png";
+import settingGear from "../../assets/setting-gear.png";
 import catImageAngry from '../../assets/kitty_angry.png';
-import { useNavigation } from '@react-navigation/native';
-import imageBG from '../../assets/kitty_background.png';
+import { useNavigation } from "@react-navigation/native";
+import imageBG from "../../assets/kitty_background.png";
 
-
+// Gesture Handler
 const handleDoubleTap = (setBannerVisible) => {
   console.log("Double tap detected!");
   setBannerVisible((current) => !current); // Toggle the visibility of the banner
@@ -38,6 +37,7 @@ const Home = () => {
   const [isBannerVisible, setBannerVisible] = useState(false); // State to manage the visibility of the banner
   const [catImageState, setCatImage] = useState(catImage); 
 
+  // Handling Button Press
   const handleDeclineCall = () => {
     setCatImage(catImage);
     setBannerVisible(false);
@@ -46,6 +46,10 @@ const Home = () => {
   const handleReceiveCall = () => {
     setBannerVisible(false);
     navigation.navigate("FakePhoneCall");
+  };
+
+  const handleSettingPress = () => {
+    navigation.navigate("Setting");
   };
 
   // Gestures
@@ -76,6 +80,9 @@ const Home = () => {
           </View>
         </View>
       </Modal>
+      <TouchableOpacity style={styles.container} onPress={handleSettingPress}>
+        <Image style={styles.settingImage} source={settingGear} />
+      </TouchableOpacity>
       <GestureHandlerRootView style={styles.container}>
         <GestureDetector gesture={doubleTap}>
           <GestureDetector gesture={swipe}>
@@ -124,21 +131,29 @@ const styles = StyleSheet.create({
   bannerImage: {
     width: 50,
     height: 50,
-    margin: 5
+    margin: 5,
   },
-  imagebgStyle:{
+  imagebgStyle: {
     width: 415,
     height: 900,
-    zIndex: -1
+    zIndex: -1,
   },
-  catImage:{
-    position: 'absolute',
+  catImage: {
+    position: "absolute",
     bottom: 0,
     left: -368,
     width: 1150,
     height: 1150,
-    resizeMode: 'contain'
-  }
+    resizeMode: "contain",
+  },
+  settingImage: {
+    position: "absolute",
+    width: 50,
+    height: 50,
+    top: 45,
+    right: 75,
+    resizeMode: "contain",
+  },
 });
 
 export default Home;
