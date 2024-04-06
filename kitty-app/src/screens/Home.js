@@ -130,10 +130,10 @@ const styles = StyleSheet.create({
   },
   catImage:{
     position: 'absolute',
-    bottom: 400,
-    left: 65,
-    width: 300,
-    height: 300,
+    bottom: 0,
+    left: -390,
+    width: 1200,
+    height: 1200,
     resizeMode: 'contain'
   }
 });
