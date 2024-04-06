@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
+import fakecall from "../../assets/fakecall.png";
 
 const FakeHomeCall = () => {
   return (
     <View style={styles.container}>
-      <Text>hi</Text>
+      <Image source={fakecall} style={styles.image} />
     </View>
   );
 };
@@ -16,9 +17,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 200,
-    height: 200,
-    resizeMode: "contain",
+    width: 390,
+    height: 760,
   },
 });
 

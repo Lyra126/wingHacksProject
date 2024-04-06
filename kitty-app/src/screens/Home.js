@@ -1,13 +1,17 @@
 import React, { useRef, useState } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import {
   TapGestureHandler,
-  PanGestureHandler,
   State,
   GestureHandlerRootView,
   Gesture,
   GestureDetector,
 } from "react-native-gesture-handler";
+import profileImage from "../../assets/profile.png";
+import declineCallImage from "../../assets/declinecall.png";
+import takeCallImage from "../../assets/receivecall.png";
+import catImage from "../../assets/cat.png";
+import { useNavigation } from "@react-navigation/native";
 
 const handleDoubleTap = (setBannerVisible) => {
   console.log("Double tap detected!");
@@ -19,7 +23,7 @@ const handleSwipe = () => {
 };
 
 const Home = () => {
-  const swiperRef = useRef(null);
+  const navigation = useNavigation();
   const [isBannerVisible, setBannerVisible] = useState(false); // State to manage the visibility of the banner
 
   const handleDeclineCall = () => {
@@ -44,22 +48,17 @@ const Home = () => {
       {isBannerVisible && ( // Conditional rendering based on the visibility state
         <View style={styles.banner}>
           <View style={styles.horizontalContainer}>
-            <Image
-              source={"../../assets/profile.png"}
-              style={styles.bannerImage}
-            />
+            <Image source={profileImage} style={styles.bannerImage} />
             <View style={styles.verticalTextContainer}>
               <Text style={styles.text}>Bob</Text>
               <Text style={styles.text}>(Honey)</Text>
             </View>
-            <Image
-              source={"../../assets/declinecall.png"}
-              style={styles.bannerImage}
-            />
-            <Image
-              source={"../../assets/takecall.png"}
-              style={styles.bannerImage}
-            />
+            <TouchableOpacity onPress={handleDeclineCall}>
+              <Image source={declineCallImage} style={styles.bannerImage} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleReceiveCall}>
+              <Image source={takeCallImage} style={styles.bannerImage} />
+            </TouchableOpacity>
           </View>
         </View>
       )}
@@ -68,7 +67,7 @@ const Home = () => {
           <GestureDetector gesture={swipe}>
             <Image
               style={styles.image}
-              source={require("../../assets/cat.png")} // Path to your local image file
+              source={catImage} // Path to your local image file
             />
           </GestureDetector>
         </GestureDetector>
@@ -91,11 +90,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
   },
-  smallImage: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
-  },
   verticalTextContainer: {
     flex: 1,
     justifyContent: "center",
@@ -106,12 +100,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     marginBottom: 5,
   },
-  largeImage: {
-    width: "100%",
-    height: 200,
-    resizeMode: "cover",
-    borderRadius: 10, // Rounded corners
-  },
   image: {
     width: "100%",
     height: "100%",
@@ -120,6 +108,7 @@ const styles = StyleSheet.create({
   bannerImage: {
     width: 50,
     height: 50,
+    margin: 5,
   },
 });
 
