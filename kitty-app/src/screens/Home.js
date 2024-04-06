@@ -19,6 +19,7 @@ import profileImage from "../../assets/profile.png";
 import declineCallImage from '../../assets/declinecall.png';
 import receiveCallImage from '../../assets/receivecall.png';
 import catImage from '../../assets/kitty_resting.png';
+import catImageAngry from '../../assets/kitty_angry.png';
 import { useNavigation } from '@react-navigation/native';
 import imageBG from '../../assets/kitty_background.png';
 
@@ -35,8 +36,10 @@ const handleSwipe = () => {
 const Home = () => {
   const navigation = useNavigation();
   const [isBannerVisible, setBannerVisible] = useState(false); // State to manage the visibility of the banner
+  const [catImageState, setCatImage] = useState(catImage); 
 
   const handleDeclineCall = () => {
+    setCatImage(catImage);
     setBannerVisible(false);
   };
 
@@ -50,6 +53,7 @@ const Home = () => {
     .numberOfTaps(2)
     .onStart(() => {
       handleDoubleTap(setBannerVisible);
+      setCatImage(catImageAngry);
     });
 
   const swipe = Gesture.Pan().onStart(handleSwipe);
@@ -62,7 +66,6 @@ const Home = () => {
             <Image source={profileImage} style={styles.bannerImage} />
             <View style={styles.verticalTextContainer}>
               <Text style={styles.text}>Bob</Text>
-              <Text style={styles.text}>(Boyfriend)</Text>
             </View>
             <TouchableOpacity onPress={handleDeclineCall}>
               <Image source={declineCallImage} style={styles.bannerImage} />
@@ -78,7 +81,7 @@ const Home = () => {
           <GestureDetector gesture={swipe}>
             <Image
               style={styles.catImage}
-              source={catImage} // Path to your local image file
+              source={catImageState} // Path to your local image file
             />
           </GestureDetector>
         </GestureDetector>
@@ -109,7 +112,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   text: {
-    fontSize: 16,
+    fontSize: 22,
     color: "#fff",
     marginBottom: 5,
   },
@@ -131,9 +134,9 @@ const styles = StyleSheet.create({
   catImage:{
     position: 'absolute',
     bottom: 0,
-    left: -390,
-    width: 1200,
-    height: 1200,
+    left: -368,
+    width: 1150,
+    height: 1150,
     resizeMode: 'contain'
   }
 });
