@@ -1,15 +1,21 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-import { TapGestureHandler, State, GestureHandlerRootView } from 'react-native-gesture-handler';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createStackNavigator } from '@react-navigation/stack';
+import React, { useRef, useState } from "react";
+import { View, Text, Image, StyleSheet } from "react-native";
+import {
+  TapGestureHandler,
+  PanGestureHandler,
+  State,
+  GestureHandlerRootView,
+  Gesture,
+  GestureDetector,
+} from "react-native-gesture-handler";
 
+const handleDoubleTap = (setBannerVisible) => {
+  console.log("Double tap detected!");
+  setBannerVisible((current) => !current); // Toggle the visibility of the banner
+};
 
-const handleDoubleTap = (event, setBannerVisible) => {
-  if (event.nativeEvent.state === State.ACTIVE) {
-    console.log('Double tap detected!');
-    setBannerVisible(current => !current); // Toggle the visibility of the banner
-  }
+const handleSwipe = () => {
+  console.log("Swiped!");
 };
 
 const Home = () => {
@@ -21,32 +27,51 @@ const Home = () => {
   };
 
   const handleReceiveCall = () => {
-    navigation.navigate('FakePhoneCall');
+    navigation.navigate("FakePhoneCall");
   };
+
+  // Gestures
+  const doubleTap = Gesture.Tap()
+    .numberOfTaps(2)
+    .onStart(() => {
+      handleDoubleTap(setBannerVisible);
+    });
+
+  const swipe = Gesture.Pan().onStart(handleSwipe);
+
   return (
     <View style={styles.container}>
       {isBannerVisible && ( // Conditional rendering based on the visibility state
         <View style={styles.banner}>
           <View style={styles.horizontalContainer}>
-            <Image source={'../../assets/profile.png'} style={styles.bannerImage} />
+            <Image
+              source={"../../assets/profile.png"}
+              style={styles.bannerImage}
+            />
             <View style={styles.verticalTextContainer}>
               <Text style={styles.text}>Bob</Text>
               <Text style={styles.text}>(Honey)</Text>
             </View>
-            <Image source={'../../assets/declinecall.png'} style={styles.bannerImage} />
-            <Image source={'../../assets/takecall.png'} style={styles.bannerImage} />
+            <Image
+              source={"../../assets/declinecall.png"}
+              style={styles.bannerImage}
+            />
+            <Image
+              source={"../../assets/takecall.png"}
+              style={styles.bannerImage}
+            />
           </View>
         </View>
       )}
       <GestureHandlerRootView style={styles.container}>
-        <TapGestureHandler
-          numberOfTaps={2}
-          onHandlerStateChange={(event) => handleDoubleTap(event, setBannerVisible)}>
-          <Image
-            style={styles.image}
-            source={require('../../assets/cat.png')} // Path to your local image file
-          />
-        </TapGestureHandler>
+        <GestureDetector gesture={doubleTap}>
+          <GestureDetector gesture={swipe}>
+            <Image
+              style={styles.image}
+              source={require("../../assets/cat.png")} // Path to your local image file
+            />
+          </GestureDetector>
+        </GestureDetector>
       </GestureHandlerRootView>
     </View>
   );
@@ -57,13 +82,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   banner: {
-    backgroundColor: '#1b1b2e',
+    backgroundColor: "#1b1b2e",
     padding: 20,
     borderRadius: 10, // Rounded corners
   },
   horizontalContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 10,
   },
   smallImage: {
@@ -73,29 +98,29 @@ const styles = StyleSheet.create({
   },
   verticalTextContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     marginRight: 10,
   },
   text: {
     fontSize: 16,
-    color: '#fff',
+    color: "#fff",
     marginBottom: 5,
   },
   largeImage: {
-    width: '100%',
+    width: "100%",
     height: 200,
-    resizeMode: 'cover',
+    resizeMode: "cover",
     borderRadius: 10, // Rounded corners
   },
   image: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain',
+    width: "100%",
+    height: "100%",
+    resizeMode: "contain",
   },
-  bannerImage:{
+  bannerImage: {
     width: 50,
     height: 50,
-  }
+  },
 });
 
 export default Home;
