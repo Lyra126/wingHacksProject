@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet , TouchableOpacity} from 'react-native';
 import { TapGestureHandler, State, GestureHandlerRootView } from 'react-native-gesture-handler';
 import profileImage from '../../assets/profile.png';
 import declineCallImage from '../../assets/declinecall.png';
-import takeCallImage from '../../assets/receivecall.png';
+import receiveCallImage from '../../assets/receivecall.png';
 import catImage from '../../assets/cat.png';
 import { useNavigation } from '@react-navigation/native';
 
@@ -34,13 +34,13 @@ const Home = () => {
             <Image source={profileImage} style={styles.bannerImage} />
             <View style={styles.verticalTextContainer}>
               <Text style={styles.text}>Bob</Text>
-              <Text style={styles.text}>(Honey)</Text>
+              <Text style={styles.text}>(Boyfriend)</Text>
             </View>
             <TouchableOpacity onPress={handleDeclineCall}>
               <Image source={declineCallImage} style={styles.bannerImage} />
             </TouchableOpacity>
             <TouchableOpacity onPress={handleReceiveCall}>
-                <Image source={takeCallImage} style={styles.bannerImage} />
+                <Image source={receiveCallImage} style={styles.bannerImage} />
             </TouchableOpacity>
           </View>
         </View>
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1b1b2e',
     padding: 20,
     borderRadius: 10, // Rounded corners
+    marginTop: 35
   },
   horizontalContainer: {
     flexDirection: 'row',
