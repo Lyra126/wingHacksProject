@@ -1,21 +1,94 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity,  Linking, Platform  } from 'react-native';
 import fakecall from '../../assets/fakecall.png';
 import declineCallImage from '../../assets/declinecall.png';
 import receiveCallImage from '../../assets/receivecall.png';
 import { useNavigation } from '@react-navigation/native';
+import { Audio } from 'expo-av';
+import { sendSMS } from 'react-native-sms';
+//import Voice from '@react-native-voice/voice/dist/voice';
+
 
 const FakeHomeCall = () => {
-    const navigation = useNavigation();
-    const handleDeclineCallFake = () => {
-        navigation.navigate('Home');
-      };
+//     const [isListening, setIsListening] = useState(false);
 
-      const playAudio = () => {
-        //audio is playing, retrieve file from database
-      };
+//   useEffect(() => {
+//     Voice.onSpeechStart = onSpeechStart;
+//     Voice.onSpeechRecognized = onSpeechRecognized;
+//     Voice.onSpeechEnd = onSpeechEnd;
+//     Voice.onSpeechError = onSpeechError;
+//     Voice.onSpeechResults = onSpeechResults;
 
-      const [currentTime, setCurrentTime] = useState(0);
+//     return () => {
+//       Voice.destroy().then(Voice.removeAllListeners);
+//     };
+//   }, []);
+
+//   const onSpeechStart = () => {
+//     console.log('Speech started');
+//   };
+
+//       const onSpeechRecognized = () => {
+//         console.log('Speech recognized');
+//       };
+    
+//       const onSpeechEnd = () => {
+//         console.log('Speech ended');
+//       };
+    
+//       const onSpeechError = (error) => {
+//         console.log('Speech error:', error);
+//       };
+    
+//       const onSpeechResults = (event) => {
+//         console.log('Speech results:', event.value);
+//         const spokenWords = event.value;
+//         // Check if spokenWords contain the trigger phrase
+//         if (spokenWords.includes('help')) {
+//           triggerSOS();
+//         }
+//       };
+    
+//       const startListening = async () => {
+//         try {
+//           await Voice.start('en-US');
+//           setIsListening(true);
+//         } catch (error) {
+//           console.error('Error starting speech recognition:', error);
+//         }
+//       };
+    
+//       const stopListening = async () => {
+//         try {
+//           await Voice.stop();
+//           setIsListening(false);
+//         } catch (error) {
+//           console.error('Error stopping speech recognition:', error);
+//         }
+//       };
+    
+//       const triggerSOS = () => {
+//         // Perform actions for SOS, such as sending alerts
+//         console.log('SOS triggered');
+//       };
+
+    // const playAudio = async () => {
+    //     const soundObject = new Audio.Sound();
+    //     try {
+    //         await soundObject.loadAsync(require('../../assets/sample.mp3'));
+    //         console.log('Audio loaded successfully');
+    //         await soundObject.setVolumeAsync(1.0);
+    //         await soundObject.playAsync();
+    //         console.log('Audio playback started');
+    //     } catch (error) {
+    //         console.log('Error playing audio:', error);
+    //     }
+    // };
+    
+   
+      
+
+    const [currentTime, setCurrentTime] = useState(0);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -25,6 +98,27 @@ const FakeHomeCall = () => {
         // Cleanup function to clear the interval when component unmounts
         return () => clearInterval(intervalId);
     }, []); // Empty dependency array to run the effect only once when component mounts
+
+    const navigation = useNavigation();
+    const handleDeclineCallFake = () => {
+        navigation.navigate('Home');
+    };
+    const handleReceiveCall = async() =>{
+    
+            const recipients = ['9252237924']; // Add your desired recipient phone numbers here
+            const message = 'This is a test message'; // Add your message here
+            const smsUrl = Platform.select({
+              ios: `sms:${recipients.join(',')}&body=${encodeURIComponent(message)}`,
+              android: `sms:${recipients.join(';')}?body=${encodeURIComponent(message)}`,
+            });
+            try {
+              await Linking.openURL(smsUrl);
+              console.log('SMS app opened successfully');
+            } catch (error) {
+              console.log('Error opening SMS app:', error);
+    
+        }
+    };
 
     // Format the current time into minutes and seconds
     const minutes = Math.floor(currentTime / 60).toString().padStart(2, '0');
@@ -37,9 +131,10 @@ const FakeHomeCall = () => {
       <TouchableOpacity onPress={handleDeclineCallFake}>
         <Image source={declineCallImage} style={styles.declineCall} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={playAudio}>
+      <TouchableOpacity onPress={handleReceiveCall} > 
         <Image source={receiveCallImage} style={styles.receiveCall} />
       </TouchableOpacity>
+      {/* onPress={isListening ? stopListening : startListening} */}
     </View>
   );
 };
