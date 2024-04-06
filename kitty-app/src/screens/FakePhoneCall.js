@@ -4,88 +4,13 @@ import fakecall from '../../assets/fakecall.png';
 import declineCallImage from '../../assets/declinecall.png';
 import receiveCallImage from '../../assets/receivecall.png';
 import { useNavigation } from '@react-navigation/native';
-import { Audio } from 'expo-av';
 import { sendSMS } from 'react-native-sms';
 import * as Location from 'expo-location';
-
+//import * as Speech from 'expo-speech-recognition';
 
 
 const FakeHomeCall = () => {
-//     const [isListening, setIsListening] = useState(false);
 
-//   useEffect(() => {
-//     Voice.onSpeechStart = onSpeechStart;
-//     Voice.onSpeechRecognized = onSpeechRecognized;
-//     Voice.onSpeechEnd = onSpeechEnd;
-//     Voice.onSpeechError = onSpeechError;
-//     Voice.onSpeechResults = onSpeechResults;
-
-//     return () => {
-//       Voice.destroy().then(Voice.removeAllListeners);
-//     };
-//   }, []);
-
-//   const onSpeechStart = () => {
-//     console.log('Speech started');
-//   };
-
-//       const onSpeechRecognized = () => {
-//         console.log('Speech recognized');
-//       };
-    
-//       const onSpeechEnd = () => {
-//         console.log('Speech ended');
-//       };
-    
-//       const onSpeechError = (error) => {
-//         console.log('Speech error:', error);
-//       };
-    
-//       const onSpeechResults = (event) => {
-//         console.log('Speech results:', event.value);
-//         const spokenWords = event.value;
-//         // Check if spokenWords contain the trigger phrase
-//         if (spokenWords.includes('help')) {
-//           triggerSOS();
-//         }
-//       };
-    
-//       const startListening = async () => {
-//         try {
-//           await Voice.start('en-US');
-//           setIsListening(true);
-//         } catch (error) {
-//           console.error('Error starting speech recognition:', error);
-//         }
-//       };
-    
-//       const stopListening = async () => {
-//         try {
-//           await Voice.stop();
-//           setIsListening(false);
-//         } catch (error) {
-//           console.error('Error stopping speech recognition:', error);
-//         }
-//       };
-    
-//       const triggerSOS = () => {
-//         // Perform actions for SOS, such as sending alerts
-//         console.log('SOS triggered');
-//       };
-
-    // const playAudio = async () => {
-    //     const soundObject = new Audio.Sound();
-    //     try {
-    //         await soundObject.loadAsync(require('../../assets/sample.mp3'));
-    //         console.log('Audio loaded successfully');
-    //         await soundObject.setVolumeAsync(1.0);
-    //         await soundObject.playAsync();
-    //         console.log('Audio playback started');
-    //     } catch (error) {
-    //         console.log('Error playing audio:', error);
-    //     }
-    // };
-    
     const [altitude, setAltitude] = useState(null);
     const [latitude, setLatitude] = useState(null);
     const [longitude, setLongitude] = useState(null);
@@ -124,15 +49,39 @@ const FakeHomeCall = () => {
         return () => clearInterval(intervalId);
     }, []); // Empty dependency array to run the effect only once when component mounts
     
-      
+//     const [isListening, setIsListening] = useState(false);
+//   const [recognizedText, setRecognizedText] = useState('');
+
+//   const startListening = async () => {
+//     try {
+//       await Speech.requestPermissionsAsync();
+//       await SpeechRecognition.startListeningAsync();
+//       setIsListening(true);
+//     } catch (error) {
+//       console.log('Error starting voice recognition:', error);
+//     }
+//   };
+
+//   const stopListening = async () => {
+//     try {
+//       const { transcription } = await SpeechRecognition.stopListeningAsync();
+//       setRecognizedText(transcription || 'No speech detected');
+//       setIsListening(false);
+//     } catch (error) {
+//       console.log('Error stopping voice recognition:', error);
+//     }
+//   };
+
       
 
     const navigation = useNavigation();
     const handleDeclineCallFake = () => {
+        stopListening();
         navigation.navigate('Home');
     };
     
     const handleReceiveCall = async () => {
+        startListening();
         if (altitude !== null && latitude !== null && longitude !== null && speed !== null && timestamp !== null) {
             const recipients = ['9252237924']; // Add your desired recipient phone numbers here
             const message = `Help! Here is my location: \n
