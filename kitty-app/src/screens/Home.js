@@ -38,29 +38,27 @@ const Home = () => {
   const navigation = useNavigation();
   const [isBannerVisible, setBannerVisible] = useState(false); // State to manage the visibility of the banner
   const [catImageState, setCatImage] = useState(catImage); 
-
   const [tips, setTips] = useState([]);
   const [randomTip, setRandomTip] = useState(null);
-
+  
   useEffect(() => {
-    const fetchTips = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/tips/getAll');
-        if (response.status !== 200) {
-          throw new Error('Failed to fetch tips');
-        }
-        const data = response.data;
-        const tipsArray = data.map(tip => tip.tip);
-        setTips(tipsArray);
-        const randomIndex = Math.floor(Math.random() * tipsArray.length);
-        setRandomTip(tipsArray[randomIndex]);
-      } catch (error) {
+    axios.get('http://10.136.35.100:8080/tips/getAll')
+      .then(response => {
+        const tipsWithIds = response.data.map(({ id, tip }) => ({ id, tip }));
+        setTips(tipsWithIds);
+        console.log(tipsWithIds);
+        
+        // Selecting a random tip
+        const randomIndex = Math.floor(Math.random() * tipsWithIds.length);
+        const randomTip = tipsWithIds[randomIndex].tip;
+        setRandomTip(randomTip);
+      })
+      .catch(error => {
         console.error('Error fetching tips:', error);
-      }
-    };
-
-    fetchTips();
+      });
   }, []);
+  
+
 
   // Handling Button Press
   const handleDeclineCall = () => {
@@ -105,6 +103,7 @@ const Home = () => {
           </View>
         </View>
       </Modal>
+      <Text style={styles.randomTipText}>{randomTip}</Text>
       <TouchableOpacity style={styles.container} onPress={handleSettingPress}>
         <Image style={styles.settingImage} source={settingGear} />
       </TouchableOpacity>
@@ -180,6 +179,10 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     zIndex: 20
   },
+  randomTipText:{
+    position: "absolute",
+    top: 150,
+  }
 });
 
 export default Home;
