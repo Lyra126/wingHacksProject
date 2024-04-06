@@ -8,8 +8,6 @@ import {
   Modal,
 } from "react-native";
 import {
-  TapGestureHandler,
-  State,
   GestureHandlerRootView,
   Gesture,
   GestureDetector,
@@ -18,8 +16,10 @@ import profileImage from "../../assets/profile.png";
 import declineCallImage from "../../assets/declinecall.png";
 import receiveCallImage from "../../assets/receivecall.png";
 import catImage from "../../assets/cat.png";
+import settingGear from "../../assets/setting-gear.png";
 import { useNavigation } from "@react-navigation/native";
 
+// Gesture Handler
 const handleDoubleTap = (setBannerVisible) => {
   console.log("Double tap detected!");
   setBannerVisible((current) => !current); // Toggle the visibility of the banner
@@ -33,12 +33,17 @@ const Home = () => {
   const navigation = useNavigation();
   const [isBannerVisible, setBannerVisible] = useState(false); // State to manage the visibility of the banner
 
+  // Handling Button Press
   const handleDeclineCall = () => {
     setBannerVisible(false);
   };
 
   const handleReceiveCall = () => {
     navigation.navigate("FakePhoneCall");
+  };
+
+  const handleSettingPress = () => {
+    navigation.navigate("Setting");
   };
 
   // Gestures
