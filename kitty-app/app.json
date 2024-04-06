@@ -25,7 +25,8 @@
       },
       "permissions": [
         "android.permission.RECORD_AUDIO"
-      ]
+      ],
+      "package": "com.wishwws.kittyapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -38,11 +39,6 @@
           "speechRecognitionPermission": "Allow Voice to Text Tutorial to securely recognize user speech"
         }
       ]
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "7dffc2f4-c34f-459c-ab7b-64011dc99f62"
-      }
-    }
+    ]
   }
 }

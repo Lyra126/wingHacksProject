@@ -9,20 +9,28 @@ import {
   TextInput,
 } from "react-native";
 import settingImage from "../../assets/setting-header.png";
-import imageBG from "../../assets/kitty_background.png";
+import imageBG from "../../assets/settingBG.png";
 import { useState } from "react";
+import Icon from "@expo/vector-icons/Entypo";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 const Setting = () => {
   const [isContactVisible, setContactVisible] = useState(false);
+  const navigation = useNavigation();
 
   // Handle events
   const handleButtonPress = () => {
     setContactVisible((current) => !current);
   };
 
+  const handleCrossPress = () => {
+    navigation.navigate("Home");
+  };
+
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
+    relationship: "",
     // Add more form fields as needed
   });
 
@@ -44,48 +52,40 @@ const Setting = () => {
 
   return (
     <ImageBackground source={imageBG} style={styles.imagebgStyle}>
-      <View style={styles.tint}>
-        <View style={styles.container}>
-          <Image style={styles.title} source={settingImage} />
-          <Button
-            title="Add Emergency Contact"
-            onPress={handleButtonPress}
-          ></Button>
-        </View>
-        <Modal
-          visible={isContactVisible}
-          animationType="slide"
-          transparent={true}
-          onRequestClose={() => setContactVisible(false)}
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              <Text style={styles.title}>Popup Form</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Name"
-                value={formData.name}
-                onChangeText={(text) => handleInputChange("name", text)}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={formData.email}
-                onChangeText={(text) => handleInputChange("email", text)}
-              />
-              {/* Add more TextInput components for additional form fields */}
-              <Button title="Submit" onPress={handleSubmit} />
-              <Button title="Close" onPress={() => setContactVisible(false)} />
-            </View>
-          </View>
-        </Modal>
+      <TouchableOpacity onPress={handleCrossPress}>
+        <Icon
+          name="cross"
+          size={32}
+          style={{ zIndex: 1, position: "absolute", top: 30 }}
+        />
+      </TouchableOpacity>
+      <View style={styles.modalContainer}>
+        <Text style={styles.text}>Enter name of contact:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Name"
+          value={formData.name}
+          onChangeText={(text) => handleInputChange("name", text)}
+        />
+        <Text style={styles.text}>Enter relationship of contact:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Relationship"
+          value={formData.relationship}
+          onChangeText={(text) => handleInputChange("email", text)}
+        />
+        <Button color={"#7E3A15"} title="Submit" onPress={handleSubmit} />
       </View>
     </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { justifyContent: "center", alignItems: "center" },
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
   title: {
     width: 200,
     height: 100,
@@ -102,22 +102,17 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-  },
-  modalContent: {
-    backgroundColor: "white",
-    padding: 20,
-    borderRadius: 10,
-    elevation: 5,
+    top: 325,
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#C88A65",
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
   },
+  text: { color: "#7E3A15" },
 });
 
 export default Setting;

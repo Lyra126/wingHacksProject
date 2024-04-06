@@ -18,11 +18,10 @@ import declineCallImage from "../../assets/declinecall.png";
 import receiveCallImage from "../../assets/receivecall.png";
 import catImage from "../../assets/kitty_resting.png";
 import settingGear from "../../assets/gear.png";
-import catImageAngry from '../../assets/kitty_angry.png';
+import catImageAngry from "../../assets/kitty_angry.png";
 import { useNavigation } from "@react-navigation/native";
 import imageBG from "../../assets/kitty_background.png";
 import axios from "axios";
-
 
 // Gesture Handler
 const handleDoubleTap = (setBannerVisible) => {
@@ -37,28 +36,27 @@ const handleSwipe = () => {
 const Home = () => {
   const navigation = useNavigation();
   const [isBannerVisible, setBannerVisible] = useState(false); // State to manage the visibility of the banner
-  const [catImageState, setCatImage] = useState(catImage); 
+  const [catImageState, setCatImage] = useState(catImage);
   const [tips, setTips] = useState([]);
   const [randomTip, setRandomTip] = useState(null);
-  
-  useEffect(() => {
 
-    axios.get('http://10.136.35.100:8080/tips/getAll')
-      .then(response => {
+  useEffect(() => {
+    axios
+      .get("http://10.136.35.100:8080/tips/getAll")
+      .then((response) => {
         const tipsWithIds = response.data.map(({ id, tip }) => ({ id, tip }));
         setTips(tipsWithIds);
         console.log(tipsWithIds);
-        
+
         // Selecting a random tip
         const randomIndex = Math.floor(Math.random() * tipsWithIds.length);
         const randomTip = tipsWithIds[randomIndex].tip;
         setRandomTip(randomTip);
       })
-      .catch(error => {
-        console.error('Error fetching tips:', error);
+      .catch((error) => {
+        console.error("Error fetching tips:", error);
       });
   }, []);
-  
 
   // Handling Button Press
   const handleDeclineCall = () => {
@@ -103,10 +101,10 @@ const Home = () => {
           </View>
         </View>
       </Modal>
-      <Text style={styles.randomTipText}>{randomTip}</Text>
-      <TouchableOpacity style={styles.container} onPress={handleSettingPress}>
+      <TouchableOpacity style={{ zIndex: 1 }} onPress={handleSettingPress}>
         <Image style={styles.settingImage} source={settingGear} />
       </TouchableOpacity>
+      <Text style={styles.randomTipText}>{randomTip}</Text>
       <GestureHandlerRootView style={styles.container}>
         <GestureDetector gesture={doubleTap}>
           <GestureDetector gesture={swipe}>
@@ -172,16 +170,16 @@ const styles = StyleSheet.create({
   },
   settingImage: {
     position: "absolute",
-    width: 950,
-    height: 950,
-    top: 15,
-    right: -275,
+    width: 500,
+    height: 500,
+    top: -180,
+    right: 0,
     resizeMode: "contain",
   },
-  randomTipText:{
+  randomTipText: {
     position: "absolute",
     top: 150,
-  }
+  },
 });
 
 export default Home;
