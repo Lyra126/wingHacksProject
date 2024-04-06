@@ -1,13 +1,4 @@
-import {
-  Button,
-  Image,
-  ImageBackground,
-  Modal,
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-} from "react-native";
+import { Button, Image, ImageBackground, Modal, StyleSheet, View, Text, TextInput} from "react-native";
 import settingImage from "../../assets/setting-header.png";
 import imageBG from "../../assets/settingBG.png";
 import { useState } from "react";
@@ -19,11 +10,6 @@ const Setting = () => {
   const [isContactVisible, setContactVisible] = useState(false);
   const navigation = useNavigation();
 
-  // Handle events
-  const handleButtonPress = () => {
-    setContactVisible((current) => !current);
-  };
-
   const handleCrossPress = () => {
     navigation.navigate("Home");
   };
@@ -31,17 +17,13 @@ const Setting = () => {
   const [formData, setFormData] = useState({
     name: "",
     relationship: "",
-    // Add more form fields as needed
   });
 
   const handleSubmit = () => {
-    // Handle form submission here
     console.log("Form submitted:", formData);
-    // Optionally, you can reset the form fields and close the modal after submission
     setFormData({
       name: "",
       email: "",
-      // Reset other form fields as needed
     });
     setContactVisible(false);
   };
@@ -55,7 +37,8 @@ const Setting = () => {
       <TouchableOpacity onPress={handleCrossPress}>
         <Icon
           name="cross"
-          size={32}
+          size={60}
+          color={"#5c2f28"}
           style={{ zIndex: 1, position: "absolute", top: 30 }}
         />
       </TouchableOpacity>
@@ -98,6 +81,7 @@ const styles = StyleSheet.create({
   imagebgStyle: {
     width: 415,
     height: 900,
+    left: -12,
     zIndex: -1,
   },
   modalContainer: {
