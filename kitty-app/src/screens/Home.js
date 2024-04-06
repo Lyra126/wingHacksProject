@@ -77,6 +77,9 @@ const Home = () => {
           </View>
         </View>
       </Modal>
+      <TouchableOpacity style={styles.container} onPress={handleSettingPress}>
+        <Image style={styles.settingImage} source={settingGear} />
+      </TouchableOpacity>
       <GestureHandlerRootView style={styles.container}>
         <GestureDetector gesture={doubleTap}>
           <GestureDetector gesture={swipe}>
@@ -138,6 +141,14 @@ const styles = StyleSheet.create({
     left: 65,
     width: 300,
     height: 300,
+    resizeMode: "contain",
+  },
+  settingImage: {
+    position: "absolute",
+    width: 50,
+    height: 50,
+    top: 45,
+    right: 75,
     resizeMode: "contain",
   },
 });
