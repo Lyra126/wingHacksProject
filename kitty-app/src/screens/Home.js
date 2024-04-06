@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
+  ImageBackground,
 } from "react-native";
 import {
   GestureHandlerRootView,
@@ -15,9 +16,10 @@ import {
 import profileImage from "../../assets/profile.png";
 import declineCallImage from "../../assets/declinecall.png";
 import receiveCallImage from "../../assets/receivecall.png";
-import catImage from "../../assets/cat.png";
+import catImage from "../../assets/kitty_resting.png";
 import settingGear from "../../assets/setting-gear.png";
 import { useNavigation } from "@react-navigation/native";
+import imageBG from "../../assets/kitty_background.png";
 
 // Gesture Handler
 const handleDoubleTap = (setBannerVisible) => {
@@ -56,7 +58,7 @@ const Home = () => {
   const swipe = Gesture.Pan().onStart(handleSwipe);
 
   return (
-    <>
+    <ImageBackground source={imageBG} style={styles.imagebgStyle}>
       <Modal transparent={true} visible={isBannerVisible}>
         <View style={styles.banner}>
           <View style={styles.horizontalContainer}>
@@ -70,6 +72,7 @@ const Home = () => {
             </TouchableOpacity>
             <TouchableOpacity onPress={handleReceiveCall}>
               <Image source={receiveCallImage} style={styles.bannerImage} />
+              <Image source={receiveCallImage} style={styles.bannerImage} />
             </TouchableOpacity>
           </View>
         </View>
@@ -78,13 +81,13 @@ const Home = () => {
         <GestureDetector gesture={doubleTap}>
           <GestureDetector gesture={swipe}>
             <Image
-              style={styles.image}
+              style={styles.catImage}
               source={catImage} // Path to your local image file
             />
           </GestureDetector>
         </GestureDetector>
       </GestureHandlerRootView>
-    </>
+    </ImageBackground>
   );
 };
 
@@ -96,6 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#1b1b2e",
     padding: 20,
     borderRadius: 10, // Rounded corners
+    marginTop: 35,
     marginTop: 35,
   },
   horizontalContainer: {
@@ -122,6 +126,19 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     margin: 5,
+  },
+  imagebgStyle: {
+    width: 415,
+    height: 900,
+    zIndex: -1,
+  },
+  catImage: {
+    position: "absolute",
+    bottom: 400,
+    left: 65,
+    width: 300,
+    height: 300,
+    resizeMode: "contain",
   },
 });
 
