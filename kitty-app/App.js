@@ -1,47 +1,20 @@
-import React, { useRef } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-import { TapGestureHandler, State , GestureHandlerRootView} from 'react-native-gesture-handler';
-import Swiper from 'react-native-swiper';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './src/screens/Home';
+import FakePhoneCallScreen from './src/screens/FakePhoneCall';
 
-  const handleDoubleTap = event => {
-    if (event.nativeEvent.state === State.ACTIVE) {
-      console.log('Double tap detected!');
-    }
-  };
-
+const Stack = createStackNavigator();
 
 const App = () => {
-  const swiperRef = useRef(null);
-  return(
-    <View style={styles.container}>
-      <GestureHandlerRootView style={styles.container}>
-      <TapGestureHandler
-        numberOfTaps={2}
-        onHandlerStateChange={handleDoubleTap}>
-      <Image
-        style={styles.image}
-        source={require('./assets/cat.png')} // Path to your local image file
-      />
-      </TapGestureHandler>
-      </GestureHandlerRootView>
-    </View>
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="FakePhoneCall" component={FakePhoneCallScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  slide: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain',
-  },
-});
 
 export default App;
