@@ -17,7 +17,7 @@ import profileImage from "../../assets/profile.png";
 import declineCallImage from "../../assets/declinecall.png";
 import receiveCallImage from "../../assets/receivecall.png";
 import catImage from "../../assets/kitty_resting.png";
-import settingGear from "../../assets/setting-gear.png";
+import settingGear from "../../assets/gear.png";
 import catImageAngry from '../../assets/kitty_angry.png';
 import { useNavigation } from "@react-navigation/native";
 import imageBG from "../../assets/kitty_background.png";
@@ -42,6 +42,7 @@ const Home = () => {
   const [randomTip, setRandomTip] = useState(null);
   
   useEffect(() => {
+
     axios.get('http://10.136.35.100:8080/tips/getAll')
       .then(response => {
         const tipsWithIds = response.data.map(({ id, tip }) => ({ id, tip }));
@@ -58,7 +59,6 @@ const Home = () => {
       });
   }, []);
   
-
 
   // Handling Button Press
   const handleDeclineCall = () => {
@@ -172,12 +172,11 @@ const styles = StyleSheet.create({
   },
   settingImage: {
     position: "absolute",
-    width: 50,
-    height: 50,
-    top: 45,
-    right: 75,
+    width: 950,
+    height: 950,
+    top: 15,
+    right: -275,
     resizeMode: "contain",
-    zIndex: 20
   },
   randomTipText:{
     position: "absolute",
