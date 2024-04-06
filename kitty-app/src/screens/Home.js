@@ -1,19 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  Modal,
-  ImageBackground,
-} from "react-native";
-import {
-  GestureHandlerRootView,
-  Gesture,
-  GestureDetector,
-} from "react-native-gesture-handler";
-import profileImage from "../../assets/profile.png";
+import { View, Text, Image, StyleSheet, TouchableOpacity, Modal, ImageBackground} from "react-native";
+import { GestureHandlerRootView, Gesture, GestureDetector} from "react-native-gesture-handler";
+import profileImage from "../../assets/pfp_man.png";
 import declineCallImage from "../../assets/declinecall.png";
 import receiveCallImage from "../../assets/receivecall.png";
 import catImage from "../../assets/kitty_resting.png";
@@ -26,14 +14,11 @@ import axios from "axios";
 // Gesture Handler
 const handleDoubleTap = (setBannerVisible) => {
   console.log("Double tap detected!");
-  setBannerVisible((current) => !current); // Toggle the visibility of the banner
-};
-
-const handleSwipe = () => {
-  console.log("Swiped!");
+  setBannerVisible((current) => !current); 
 };
 
 const Home = () => {
+  //all variables
   const navigation = useNavigation();
   const [isBannerVisible, setBannerVisible] = useState(false); // State to manage the visibility of the banner
   const [catImageState, setCatImage] = useState(catImage);
@@ -73,7 +58,6 @@ const Home = () => {
     navigation.navigate("Setting");
   };
 
-  // Gestures
   const doubleTap = Gesture.Tap()
     .numberOfTaps(2)
     .onStart(() => {
@@ -81,7 +65,6 @@ const Home = () => {
       setCatImage(catImageAngry);
     });
 
-  const swipe = Gesture.Pan().onStart(handleSwipe);
 
   return (
     <ImageBackground source={imageBG} style={styles.imagebgStyle}>
@@ -90,7 +73,7 @@ const Home = () => {
           <View style={styles.horizontalContainer}>
             <Image source={profileImage} style={styles.bannerImage} />
             <View style={styles.verticalTextContainer}>
-              <Text style={styles.text}>Bob</Text>
+              <Text style={styles.text}>Dad</Text>
             </View>
             <TouchableOpacity onPress={handleDeclineCall}>
               <Image source={declineCallImage} style={styles.bannerImage} />
@@ -107,12 +90,7 @@ const Home = () => {
       <Text style={styles.randomTipText}>{randomTip}</Text>
       <GestureHandlerRootView style={styles.container}>
         <GestureDetector gesture={doubleTap}>
-          <GestureDetector gesture={swipe}>
-            <Image
-              style={styles.catImage}
-              source={catImageState} // Path to your local image file
-            />
-          </GestureDetector>
+          <Image style={styles.catImage} source={catImageState} />
         </GestureDetector>
       </GestureHandlerRootView>
     </ImageBackground>
@@ -121,52 +99,52 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   banner: {
     backgroundColor: "#1b1b2e",
     padding: 20,
-    borderRadius: 10, // Rounded corners
+    borderRadius: 10,
     marginTop: 35,
-    marginTop: 35,
+    marginTop: 35
   },
   horizontalContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 10
   },
   verticalTextContainer: {
     flex: 1,
     justifyContent: "center",
-    marginRight: 10,
+    marginRight: 10
   },
   text: {
     fontSize: 22,
     color: "#fff",
-    marginBottom: 5,
+    marginBottom: 5
   },
   image: {
     width: "100%",
     height: "100%",
-    resizeMode: "contain",
+    resizeMode: "contain"
   },
   bannerImage: {
     width: 50,
     height: 50,
-    margin: 5,
+    margin: 5
   },
   imagebgStyle: {
     width: 415,
     height: 900,
-    zIndex: -1,
+    zIndex: -1
   },
   catImage: {
     position: "absolute",
     bottom: 0,
-    left: -368,
-    width: 1150,
-    height: 1150,
-    resizeMode: "contain",
+    left: -330,
+    width: 1050,
+    height: 1050,
+    resizeMode: "contain"
   },
   settingImage: {
     position: "absolute",
@@ -178,8 +156,10 @@ const styles = StyleSheet.create({
   },
   randomTipText: {
     position: "absolute",
-    top: 150,
-  },
+    top: 67,
+    padding: 60,
+    fontFamily:"comics"
+  }
 });
 
 export default Home;
