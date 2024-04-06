@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -21,6 +21,8 @@ import settingGear from "../../assets/setting-gear.png";
 import catImageAngry from '../../assets/kitty_angry.png';
 import { useNavigation } from "@react-navigation/native";
 import imageBG from "../../assets/kitty_background.png";
+import axios from "axios";
+
 
 // Gesture Handler
 const handleDoubleTap = (setBannerVisible) => {
@@ -36,6 +38,29 @@ const Home = () => {
   const navigation = useNavigation();
   const [isBannerVisible, setBannerVisible] = useState(false); // State to manage the visibility of the banner
   const [catImageState, setCatImage] = useState(catImage); 
+
+  const [tips, setTips] = useState([]);
+  const [randomTip, setRandomTip] = useState(null);
+
+  useEffect(() => {
+    const fetchTips = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/tips/getAll');
+        if (response.status !== 200) {
+          throw new Error('Failed to fetch tips');
+        }
+        const data = response.data;
+        const tipsArray = data.map(tip => tip.tip);
+        setTips(tipsArray);
+        const randomIndex = Math.floor(Math.random() * tipsArray.length);
+        setRandomTip(tipsArray[randomIndex]);
+      } catch (error) {
+        console.error('Error fetching tips:', error);
+      }
+    };
+
+    fetchTips();
+  }, []);
 
   // Handling Button Press
   const handleDeclineCall = () => {
