@@ -41,6 +41,7 @@ const Home = () => {
   };
 
   const handleReceiveCall = () => {
+    setBannerVisible(false);
     navigation.navigate("FakePhoneCall");
   };
 
@@ -67,7 +68,6 @@ const Home = () => {
               <Image source={declineCallImage} style={styles.bannerImage} />
             </TouchableOpacity>
             <TouchableOpacity onPress={handleReceiveCall}>
-              <Image source={receiveCallImage} style={styles.bannerImage} />
               <Image source={receiveCallImage} style={styles.bannerImage} />
             </TouchableOpacity>
           </View>
