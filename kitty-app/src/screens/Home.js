@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet , TouchableOpacity} from 'react-native';
 import { TapGestureHandler, State, GestureHandlerRootView } from 'react-native-gesture-handler';
 import profileImage from '../../assets/profile.png';
 import declineCallImage from '../../assets/declinecall.png';
-import takeCallImage from '../../assets/takecall.png';
+import takeCallImage from '../../assets/receivecall.png';
 import catImage from '../../assets/cat.png';
 import { useNavigation } from '@react-navigation/native';
 
@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
   bannerImage:{
     width: 50,
     height: 50,
+    margin: 5
   }
 });
 
