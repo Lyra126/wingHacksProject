@@ -68,6 +68,7 @@ const Home = () => {
             </TouchableOpacity>
             <TouchableOpacity onPress={handleReceiveCall}>
               <Image source={receiveCallImage} style={styles.bannerImage} />
+              <Image source={receiveCallImage} style={styles.bannerImage} />
             </TouchableOpacity>
           </View>
         </View>
@@ -94,6 +95,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#1b1b2e",
     padding: 20,
     borderRadius: 10, // Rounded corners
+    marginTop: 35,
     marginTop: 35,
   },
   horizontalContainer: {
