@@ -153,6 +153,7 @@ const styles = StyleSheet.create({
     top: 45,
     right: 75,
     resizeMode: "contain",
+    zIndex: 20
   },
 });
 

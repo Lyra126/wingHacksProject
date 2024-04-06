@@ -48,40 +48,14 @@ const FakeHomeCall = () => {
         // Cleanup function to clear the interval when component unmounts
         return () => clearInterval(intervalId);
     }, []); // Empty dependency array to run the effect only once when component mounts
-    
-//     const [isListening, setIsListening] = useState(false);
-//   const [recognizedText, setRecognizedText] = useState('');
-
-//   const startListening = async () => {
-//     try {
-//       await Speech.requestPermissionsAsync();
-//       await SpeechRecognition.startListeningAsync();
-//       setIsListening(true);
-//     } catch (error) {
-//       console.log('Error starting voice recognition:', error);
-//     }
-//   };
-
-//   const stopListening = async () => {
-//     try {
-//       const { transcription } = await SpeechRecognition.stopListeningAsync();
-//       setRecognizedText(transcription || 'No speech detected');
-//       setIsListening(false);
-//     } catch (error) {
-//       console.log('Error stopping voice recognition:', error);
-//     }
-//   };
-
       
 
     const navigation = useNavigation();
     const handleDeclineCallFake = () => {
-        stopListening();
         navigation.navigate('Home');
     };
     
     const handleReceiveCall = async () => {
-        startListening();
         if (altitude !== null && latitude !== null && longitude !== null && speed !== null && timestamp !== null) {
             const recipients = ['9252237924']; // Add your desired recipient phone numbers here
             const message = `Help! Here is my location: \n
@@ -119,7 +93,7 @@ const FakeHomeCall = () => {
       <TouchableOpacity onPress={handleReceiveCall} > 
         <Image source={receiveCallImage} style={styles.receiveCall} />
       </TouchableOpacity>
-      {/* onPress={isListening ? stopListening : startListening} */}
+    
     </View>
   );
 };
