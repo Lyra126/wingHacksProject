@@ -14,10 +14,16 @@ import { useState } from "react";
 import Icon from "@expo/vector-icons/Entypo";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+import { useGlobal } from "../context/global";
 
 const Setting = () => {
   const [isContactVisible, setContactVisible] = useState(false);
   const navigation = useNavigation();
+  const { globalState, setGlobalState } = useGlobal();
+  const [formData, setFormData] = useState({
+    name: "",
+    relationship: "",
+  });
 
   // Handle events
   const handleButtonPress = () => {
@@ -28,21 +34,12 @@ const Setting = () => {
     navigation.navigate("Home");
   };
 
-  const [formData, setFormData] = useState({
-    name: "",
-    relationship: "",
-    // Add more form fields as needed
-  });
-
   const handleSubmit = () => {
-    // Handle form submission here
     console.log("Form submitted:", formData);
-    // Optionally, you can reset the form fields and close the modal after submission
-    setFormData({
-      name: "",
-      email: "",
-      // Reset other form fields as needed
-    });
+    setGlobalState({ ...globalState, name: formData.name });
+    setGlobalState({ ...globalState, relationship: formData.relationship });
+    alert("Submitted!");
+
     setContactVisible(false);
   };
 
@@ -72,7 +69,7 @@ const Setting = () => {
           style={styles.input}
           placeholder="Relationship"
           value={formData.relationship}
-          onChangeText={(text) => handleInputChange("email", text)}
+          onChangeText={(text) => handleInputChange("relationship", text)}
         />
         <Button color={"#7E3A15"} title="Submit" onPress={handleSubmit} />
       </View>

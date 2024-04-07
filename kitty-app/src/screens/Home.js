@@ -1,6 +1,18 @@
 import React, { useRef, useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, Modal, ImageBackground} from "react-native";
-import { GestureHandlerRootView, Gesture, GestureDetector} from "react-native-gesture-handler";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  ImageBackground,
+} from "react-native";
+import {
+  GestureHandlerRootView,
+  Gesture,
+  GestureDetector,
+} from "react-native-gesture-handler";
 import profileImage from "../../assets/pfp_man.png";
 import declineCallImage from "../../assets/declinecall.png";
 import receiveCallImage from "../../assets/receivecall.png";
@@ -10,11 +22,13 @@ import catImageAngry from "../../assets/kitty_angry.png";
 import { useNavigation } from "@react-navigation/native";
 import imageBG from "../../assets/kitty_background.png";
 import axios from "axios";
+import { useGlobal } from "../context/global";
 
 // Gesture Handler
-const handleDoubleTap = (setBannerVisible) => {
+const handleDoubleTap = (setBannerVisible, setGlobalState) => {
   console.log("Double tap detected!");
-  setBannerVisible((current) => !current); 
+  setBannerVisible((current) => !current);
+  //setGlobalState({ ...globalState });
 };
 
 const Home = () => {
@@ -24,6 +38,7 @@ const Home = () => {
   const [catImageState, setCatImage] = useState(catImage);
   const [tips, setTips] = useState([]);
   const [randomTip, setRandomTip] = useState(null);
+  const { globalState, setGlobalState } = useGlobal();
 
   useEffect(() => {
     axios
@@ -61,10 +76,13 @@ const Home = () => {
   const doubleTap = Gesture.Tap()
     .numberOfTaps(2)
     .onStart(() => {
-      handleDoubleTap(setBannerVisible);
+      handleDoubleTap(setBannerVisible, setGlobalState);
       setCatImage(catImageAngry);
     });
 
+  useEffect(() => {
+    console.log("Current name is: " + globalState.name);
+  }, [globalState]);
 
   return (
     <ImageBackground source={imageBG} style={styles.imagebgStyle}>
@@ -73,7 +91,7 @@ const Home = () => {
           <View style={styles.horizontalContainer}>
             <Image source={profileImage} style={styles.bannerImage} />
             <View style={styles.verticalTextContainer}>
-              <Text style={styles.text}>Dad</Text>
+              <Text style={styles.text}>{}</Text>
             </View>
             <TouchableOpacity onPress={handleDeclineCall}>
               <Image source={declineCallImage} style={styles.bannerImage} />
@@ -99,44 +117,44 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   banner: {
     backgroundColor: "#1b1b2e",
     padding: 20,
     borderRadius: 10,
     marginTop: 35,
-    marginTop: 35
+    marginTop: 35,
   },
   horizontalContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10
+    marginBottom: 10,
   },
   verticalTextContainer: {
     flex: 1,
     justifyContent: "center",
-    marginRight: 10
+    marginRight: 10,
   },
   text: {
     fontSize: 22,
     color: "#fff",
-    marginBottom: 5
+    marginBottom: 5,
   },
   image: {
     width: "100%",
     height: "100%",
-    resizeMode: "contain"
+    resizeMode: "contain",
   },
   bannerImage: {
     width: 50,
     height: 50,
-    margin: 5
+    margin: 5,
   },
   imagebgStyle: {
     width: 415,
     height: 900,
-    zIndex: -1
+    zIndex: -1,
   },
   catImage: {
     position: "absolute",
@@ -144,7 +162,7 @@ const styles = StyleSheet.create({
     left: -330,
     width: 1050,
     height: 1050,
-    resizeMode: "contain"
+    resizeMode: "contain",
   },
   settingImage: {
     position: "absolute",
@@ -158,8 +176,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 67,
     padding: 60,
-    fontFamily:"comics"
-  }
+    fontFamily: "comics",
+  },
 });
 
 export default Home;
