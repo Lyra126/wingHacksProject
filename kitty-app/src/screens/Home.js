@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
   imagebgStyle: {
     width: 415,
     height: 900,
+    left: -12,
     zIndex: -1,
   },
   catImage: {

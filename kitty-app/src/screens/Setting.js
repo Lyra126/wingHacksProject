@@ -52,7 +52,8 @@ const Setting = () => {
       <TouchableOpacity onPress={handleCrossPress}>
         <Icon
           name="cross"
-          size={32}
+          size={60}
+          color={"#5c2f28"}
           style={{ zIndex: 1, position: "absolute", top: 30 }}
         />
       </TouchableOpacity>
@@ -95,6 +96,7 @@ const styles = StyleSheet.create({
   imagebgStyle: {
     width: 415,
     height: 900,
+    left: -12,
     zIndex: -1,
   },
   modalContainer: {
