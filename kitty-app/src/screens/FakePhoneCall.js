@@ -39,12 +39,6 @@ const FakeHomeCall = () => {
         setLongitude(userLocation.coords.longitude);
         setSpeed(userLocation.coords.speed);
         setTimestamp(userLocation.timestamp);
-
-        console.log(userLocation.coords.altitude);
-        console.log(userLocation.coords.latitude);
-        console.log(userLocation.coords.longitude);
-        console.log(userLocation.coords.speed);
-        console.log(userLocation.timestamp);
     })();
       return () => clearInterval(intervalId); //cleanup
   }, []); //runs effect only once

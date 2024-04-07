@@ -31,7 +31,6 @@ const Home = () => {
       .then((response) => {
         const tipsWithIds = response.data.map(({ id, tip }) => ({ id, tip }));
         setTips(tipsWithIds);
-        console.log(tipsWithIds);
 
         // Selecting a random tip
         const randomIndex = Math.floor(Math.random() * tipsWithIds.length);
@@ -51,10 +50,12 @@ const Home = () => {
 
   const handleReceiveCall = () => {
     setBannerVisible(false);
+  
     navigation.navigate("FakePhoneCall");
   };
 
   const handleSettingPress = () => {
+    setBannerVisible(false);
     navigation.navigate("Setting");
   };
 
