@@ -1,30 +1,45 @@
-import { Button, Image, ImageBackground, Modal, StyleSheet, View, Text, TextInput} from "react-native";
+import {
+  Button,
+  Image,
+  ImageBackground,
+  Modal,
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+} from "react-native";
 import settingImage from "../../assets/setting-header.png";
 import imageBG from "../../assets/settingBG.png";
 import { useState } from "react";
 import Icon from "@expo/vector-icons/Entypo";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+import { useGlobal } from "../context/global";
 
 const Setting = () => {
   const [isContactVisible, setContactVisible] = useState(false);
   const navigation = useNavigation();
-
-  const handleCrossPress = () => {
-    navigation.navigate("Home");
-  };
-
+  const { globalState, setGlobalState } = useGlobal();
   const [formData, setFormData] = useState({
     name: "",
     relationship: "",
   });
 
+  // Handle events
+  const handleButtonPress = () => {
+    setContactVisible((current) => !current);
+  };
+
+  const handleCrossPress = () => {
+    navigation.navigate("Home");
+  };
+
   const handleSubmit = () => {
     console.log("Form submitted:", formData);
-    setFormData({
-      name: "",
-      email: "",
-    });
+    setGlobalState({ ...globalState, name: formData.name });
+    setGlobalState({ ...globalState, relationship: formData.relationship });
+    alert("Submitted!");
+
     setContactVisible(false);
   };
 
@@ -55,7 +70,7 @@ const Setting = () => {
           style={styles.input}
           placeholder="Relationship"
           value={formData.relationship}
-          onChangeText={(text) => handleInputChange("email", text)}
+          onChangeText={(text) => handleInputChange("relationship", text)}
         />
         <Button color={"#7E3A15"} title="Submit" onPress={handleSubmit} />
       </View>
