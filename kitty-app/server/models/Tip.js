@@ -5,7 +5,7 @@ const TipSchema = new mongoose.Schema({
     tip: {type: String, required: true},
 }); 
 
-const TipModel = mongoose.model('safetyTips', TipSchema);
+const TipModel = mongoose.model('safetytips', TipSchema);
 
 export default TipModel;
 

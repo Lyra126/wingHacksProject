@@ -42,7 +42,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://10.136.35.100:8080/tips/getAll")
+      .get("http://10.136.188.251:8080/tips/getAll")
       .then((response) => {
         const tipsWithIds = response.data.map(({ id, tip }) => ({ id, tip }));
         setTips(tipsWithIds);
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   catImage: {
     position: "absolute",
     bottom: 0,
-    left: -330,
+    left: -320,
     width: 1050,
     height: 1050,
     resizeMode: "contain",
